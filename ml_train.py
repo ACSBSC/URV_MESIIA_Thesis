@@ -65,13 +65,13 @@ def predict(model_path_RFC, model_path_DTC, X_test_path, Y_test_path):
     print(result_RFC)
     print(result_DTC)
     
-    file = "./RanSAP/dataset/original/win7-120gb-hdd/Firefox/Firefox-20210610_23-43-40/ata_write.csv"
+    '''file = "./RanSAP/dataset/original/win7-120gb-hdd/Firefox/Firefox-20210610_23-43-40/ata_write.csv"
     
-    X_test_selection = pd.read_csv(file, sep=",", names=X_test.columns)
+    X_test = pd.read_csv(file, sep=",", names=X_test.columns)'''
     
-    row = rnd.randint(0,len(X_test_selection))
-    X_new = pd.DataFrame(columns=X_test_selection.columns)
-    X_new = X_new.append(X_test_selection.iloc[row])
+    row = rnd.randint(0,len(X_test))
+    X_new = pd.DataFrame(columns=X_test.columns)
+    X_new = X_new.append(X_test.iloc[row])
     
     predict_RFC = loaded_model_RFC.predict(X_new)
     predict_DTC = loaded_model_DTC.predict(X_new)

@@ -41,6 +41,7 @@ def get_DF(fileList):
         #after the temporal dataframe is filled, save it to the final dataframe
         df = df.append(dfTemp)
 
-    #return the final dataframe    
-    return df
+    #return the final dataframe
+    df.to_csv('Sample_RanSap.csv', index = False)    
+    #return df
 

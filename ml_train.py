@@ -1,7 +1,6 @@
 #training models AI
 from random import randint
 from sklearn.ensemble import RandomForestClassifier
-from sklearn import svm
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 
@@ -10,76 +9,102 @@ from sklearn import metrics
 #import sklearn.external.joblib as extjoblib
 import joblib
 
-import pickle
 import pandas as pd
+import numpy as np
 import random as rnd
-import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
 
-def train_model(df):
-    print("Training model...")
+
+
+def train_model():
+    
+    df = pd.read_csv('Sample_RanSap.csv', sep=",")
+    features = list(df.columns)
+    X = df[features[:len(features)-2]]
+    Y = df[features[-1]] #to predict dange
+    
+    n_estimators=np.arange(5, 20, 5).tolist()
+    criterion = ["gini", "entropy"]
+    splitters = ["best", "random"]
+    
+    model_RFC = RandomForestClassifier()
+    model_DTC = DecisionTreeClassifier()
+    
+    #temporal variable to check some results
+    accuracy_list_RFC = []
+    accuracy_list_DTC = []
+    accuracy = 0.0
+    
+    print("Creating and training RFC Model...")
     print()
     
-    features = list(df.columns)
+    for criteria in criterion:
+        for estimator in n_estimators:
+            X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3)
+            new_model = RandomForestClassifier(n_estimators=estimator, criterion=criteria)
+            new_model.fit(X_train, y_train)
+            
+            accuracy_temp = new_model.score(X_test, y_test)
+            accuracy_list_RFC.append(accuracy_temp)
+            
+            if accuracy_temp>accuracy:
+                accuracy=accuracy_temp
+                model_RFC = new_model
     
-    X = df[features[:len(features)-2]]
-    Y1 = df[features[-1]] #to predict danger
-    #Y2 = df[features[-2]] #to predict type of malware / software
+    print("Creating and training DTC Model...")
+    print()
     
-    print("Splitting...")
-    X1_train, X1_test, y1_train, y1_test = train_test_split(X, Y1, test_size=0.3)
-    #X2_train, X2_test, y2_train, y2_test = train_test_split(X, Y2, test_size=0.3)
+    accuracy = 0.0
+    for criteria in criterion:
+        for splitter_ in splitters:
+            X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3)
+            new_model = DecisionTreeClassifier(criterion=criteria, splitter=splitter_)
+            new_model.fit(X_train, y_train)
+            
+            accuracy_temp = new_model.score(X_test, y_test)
+            accuracy_list_DTC.append(accuracy_temp)
+            
+            if accuracy_temp>accuracy:
+                accuracy=accuracy_temp
+                model_DTC = new_model
     
-    #Save X_test and Y_test
-    X_test_path = "./trained_AI_models/X_test.joblib"
-    Y_test_path = "./trained_AI_models/Y_test.joblib"
-    joblib.dump(X1_test, X_test_path)
-    joblib.dump(y1_test, Y_test_path)
+            
+    joblib.dump(model_RFC, "RFC_model.joblib")
+    joblib.dump(model_DTC, "DTC_model.joblib")
     
-    print("Creating models...")
-    model1 = DecisionTreeClassifier()
-    model2 = RandomForestClassifier(n_estimators=10)
+    '''print()
+    print("RFC accuracy results:")
+    print(accuracy_list_RFC)
+    print()
+    print("DTC accuracy results:")
+    print(accuracy_list_DTC)
+    print()'''
     
-    print("Training model DTC")
-    model1.fit(X1_train, y1_train)
-    filename1 = "./trained_AI_models/DTC_model.joblib"
-    joblib.dump(model1, filename1)
+    return accuracy_list_RFC, accuracy_list_DTC
     
-    print("Training model RFC")
-    model2.fit(X1_train, y1_train)
-    filename2 = "./trained_AI_models/RFC_model.joblib"
-    joblib.dump(model2, filename2)
     
-    return filename1,filename2, X_test_path, Y_test_path
 
-def predict(model_path_RFC, model_path_DTC, X_test_path, Y_test_path):
+def predict():
     print("Predicting results...")
     
-    loaded_model_RFC = joblib.load(model_path_RFC)
-    loaded_model_DTC = joblib.load(model_path_DTC)
-    X_test = joblib.load(X_test_path)
-    y_test = joblib.load(Y_test_path)
+    model_RFC = joblib.load("RFC_model.joblib")
+    model_DTC = joblib.load("DTC_model.joblib")
+ 
+    #Predict and classify the given data
     
-    result_RFC = loaded_model_RFC.score(X_test, y_test)
-    result_DTC = loaded_model_DTC.score(X_test, y_test)
-    print(result_RFC)
-    print(result_DTC)
-    
-    '''file = "./RanSAP/dataset/original/win7-120gb-hdd/Firefox/Firefox-20210610_23-43-40/ata_write.csv"
-    
-    X_test = pd.read_csv(file, sep=",", names=X_test.columns)'''
+    file = "./RanSAP/dataset/original/win7-120gb-hdd/Firefox/Firefox-20210610_23-43-40/ata_write.csv"
+    X_test = pd.read_csv(file, sep=",", names= ['Timestamp [s]', 'Timestamp [μs]','LBA','Size Block [byte]', 'Shannon Entropy 1','Shannon Entropy 2'])
     
     row = rnd.randint(0,len(X_test))
     X_new = pd.DataFrame(columns=X_test.columns)
     X_new = X_new.append(X_test.iloc[row])
     
-    predict_RFC = loaded_model_RFC.predict(X_new)
-    predict_DTC = loaded_model_DTC.predict(X_new)
+    predict_RFC = model_RFC.predict(X_new)
+    predict_DTC = model_DTC.predict(X_new)
     
     print("Predictions: ")
-    print(predict_RFC[0])
-    print(predict_DTC[0])
+    print("RFC: ",predict_RFC[0])
+    print("DTC: ",predict_DTC[0])
     
     print("Actual classification: ")
-    #print(y_test.iloc[row])
     print("Benign")
+    

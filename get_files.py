@@ -46,7 +46,7 @@ def get_files():
             else:
                 continue
         
-        win7_120_hdd.extend(random.sample(temp_list, 2))
+        win7_120_hdd.extend(random.sample(temp_list, 1))
 
                 
     #return list of selected paths

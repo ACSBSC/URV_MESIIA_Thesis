@@ -11,6 +11,7 @@ import pickle
 from lithops import FunctionExecutor, Storage
 import numpy as np
 import itertools
+import time
 
 def train_RFC_map(id,namespace,storage,estimator, criteria):
     #train the model
@@ -100,8 +101,10 @@ def train_model():
     parameters_DTC = [[namespace], criterion, splitter_]
     items_DTC = list(itertools.product(*parameters_DTC))
     
+
     
     #####################################################################################
+    start_time_0 = time.time() 
     
     print()
     print("Creating and training RFC Model...")
@@ -121,7 +124,9 @@ def train_model():
     fexec.wait()
     fexec.clean()
     
+    finalexectime_0 = time.time() - start_time_0
     #######################################################################################
+    start_time_1 = time.time()
     
     print()
     print("Creating and training DTC Model...")
@@ -141,6 +146,7 @@ def train_model():
     
     fexec.clean()
     
+    finalexectime_1 = time.time() - start_time_1
     ########################################################################################
     
     
@@ -170,7 +176,7 @@ def train_model():
     print(result_DTC)
     print()'''
     
-    return result_RFC, result_DTC
+    return result_RFC, result_DTC, finalexectime_0, finalexectime_1
     
 
 

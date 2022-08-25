@@ -12,7 +12,7 @@ import joblib
 import pandas as pd
 import numpy as np
 import random as rnd
-
+import time
 
 
 def train_model():
@@ -37,8 +37,10 @@ def train_model():
     print("Creating and training RFC Model...")
     print()
     
-    for criteria in criterion:
-        for estimator in n_estimators:
+    start_time_0 = time.time() 
+    
+    for estimator in n_estimators:
+        for criteria in criterion:
             X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3)
             new_model = RandomForestClassifier(n_estimators=estimator, criterion=criteria)
             new_model.fit(X_train, y_train)
@@ -49,11 +51,14 @@ def train_model():
             if accuracy_temp>accuracy:
                 accuracy=accuracy_temp
                 model_RFC = new_model
-    
+
+            #print("({}, {})".format(estimator, criteria))
+    finalexectime_0 = time.time() - start_time_0        
     print("Creating and training DTC Model...")
     print()
     
     accuracy = 0.0
+    start_time_1 = time.time() 
     for criteria in criterion:
         for splitter_ in splitters:
             X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3)
@@ -66,7 +71,9 @@ def train_model():
             if accuracy_temp>accuracy:
                 accuracy=accuracy_temp
                 model_DTC = new_model
-    
+                
+            #print("({}, {})".format(criteria, splitter_))
+    finalexectime_1 = time.time() - start_time_1
             
     joblib.dump(model_RFC, "RFC_model.joblib")
     joblib.dump(model_DTC, "DTC_model.joblib")
@@ -79,7 +86,7 @@ def train_model():
     print(accuracy_list_DTC)
     print()'''
     
-    return accuracy_list_RFC, accuracy_list_DTC
+    return accuracy_list_RFC, accuracy_list_DTC, finalexectime_0, finalexectime_1
     
     
 

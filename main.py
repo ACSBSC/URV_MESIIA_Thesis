@@ -19,9 +19,9 @@ if __name__ == "__main__" :
 
     start_time_0 = time.time() 
     RFC_np_acc, DTC_np_acc, RFC_np_training_time, DTC_np_trining_time = mlT.train_model()
-    finalexectime_0 = time.time() - start_time_0  
+    finalexectime_0 = time.time() - start_time_0 
     
-    #mlT.predict()
+    mlT.predict()
     
     
     
@@ -29,7 +29,7 @@ if __name__ == "__main__" :
     RFC_p_acc, DTC_p_acc, RFC_p_training_time, DTC_p_trining_time = mlT_parallel.train_model()
     finalexectime_1 = time.time() - start_time_1
     
-    #mlT_parallel.prediction()
+    mlT_parallel.prediction()
     
     
     print()
@@ -38,7 +38,7 @@ if __name__ == "__main__" :
     print("Time taken for training model with parallel processes: \n", finalexectime_1)
     
     ###############################################################################################################################
-    run_ = 20
+    '''run_ = 20
     RFC_np_acc.extend([run_,RFC_np_training_time,finalexectime_0, "non-parallel_method"])
     DTC_np_acc.extend([run_,DTC_np_trining_time,finalexectime_0, "non-parallel_method"])
     RFC_p_acc.extend([run_,RFC_p_training_time,finalexectime_1, "parallel_method"])
@@ -53,6 +53,6 @@ if __name__ == "__main__" :
     df_DTC_ = pd.DataFrame([DTC_p_acc,DTC_np_acc], columns=list_DTC)
     
     df_RFC_.to_csv('Acc_Result_RFC.csv', mode='a', index = False, header=False)
-    df_DTC_.to_csv('Acc_Result_DTC.csv', mode='a', index = False, header=False)
+    df_DTC_.to_csv('Acc_Result_DTC.csv', mode='a', index = False, header=False)'''
 
         

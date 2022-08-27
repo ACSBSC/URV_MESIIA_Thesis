@@ -101,7 +101,10 @@ def train_model():
     parameters_DTC = [[namespace], criterion, splitter_]
     items_DTC = list(itertools.product(*parameters_DTC))
     
-
+    '''print("DTC PARAM")
+    print(items_DTC)
+    print("RFC PARAM")
+    print(items_RFC)'''
     
     #####################################################################################
     start_time_0 = time.time() 

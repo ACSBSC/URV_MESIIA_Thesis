@@ -8,6 +8,7 @@
 library(ggplot2)
 library(reshape2)
 library(forcats)
+library(dplyr)
 
 df_DTC <- read.csv(file ="Acc_Result_DTC.csv")
 df_RFC <- read.csv(file ="Acc_Result_RFC.csv")
@@ -253,12 +254,140 @@ plot_avrg_acc_RFC <- ggplot(df_RFC_avrg_acc, aes(x=variable, y= value,colour=Met
     axis.title=element_text(size=10),
     plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
 
+
+###############################################################################
+######################## Comparison between models Acc ########################
+###############################################################################
+
+
+
+df_rfc_accuracy_col <- df_RFC[, c("Accuracy_Model_1","Accuracy_Model_2","Accuracy_Model_3","Accuracy_Model_4", "Accuracy_Model_5","Accuracy_Model_6", "Run","Method")]
+df_rfc_accuracy_col$mean=rowMeans(df_rfc_accuracy_col[,c("Accuracy_Model_1","Accuracy_Model_2","Accuracy_Model_3","Accuracy_Model_4", "Accuracy_Model_5","Accuracy_Model_6")], na.rm=TRUE)
+
+df_dtc_accuracy_col <- df_DTC[, c("Accuracy_Model_1","Accuracy_Model_2","Accuracy_Model_3","Accuracy_Model_4", "Run","Method")]
+df_dtc_accuracy_col$mean=rowMeans(df_dtc_accuracy_col[,c("Accuracy_Model_1","Accuracy_Model_2","Accuracy_Model_3","Accuracy_Model_4")], na.rm=TRUE)
+
+#non-parallel
+
+np_rfc <-  filter(df_rfc_accuracy_col,Method == "non-parallel_method")
+np_dtc <- filter(df_dtc_accuracy_col,Method == "non-parallel_method")
+colors <- c("RFC" = "blue", "DTC" = "red")
+
+
+plot_avrg_acc_models_np <- ggplot(np_rfc, aes(x=Run, y= mean))+
+  geom_line(alpha = 0.5)+
+  geom_point(aes(color="RFC"),size = 5)+
+  geom_line(data = np_dtc, alpha = 0.5)+
+  geom_point(data = np_dtc, aes(color="DTC"),size = 5)+
+  labs(title="Comparisson of Accuracy between models trained sequentially",
+       x="Trial Nr.",  
+       y="Average Accuracy per trial",
+       color = "Model")+
+  scale_color_manual(values = colors)+
+  theme_minimal()+
+  theme(#panel.grid.major.y = element_blank(),
+    #panel.grid.minor.x = element_blank(),
+    axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
+    axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
+    axis.title=element_text(size=10),
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+
+#parallel
+p_rfc <-  filter(df_rfc_accuracy_col,Method == "parallel_method")
+p_dtc <- filter(df_dtc_accuracy_col,Method == "parallel_method")
+
+plot_avrg_acc_models_p <- ggplot(p_rfc, aes(x=Run, y= mean))+
+  geom_line(alpha = 0.5)+
+  geom_point(aes(color="RFC"),size = 5)+
+  geom_line(data = p_dtc, alpha = 0.5)+
+  geom_point(data = p_dtc, aes(color="DTC"),size = 5)+
+  labs(title="Comparisson of Accuracy between models trained by parallel processing",
+       x="Trial Nr.",  
+       y="Average Accuracy per trial",
+       color = "Model")+
+  scale_color_manual(values = colors)+
+  theme_minimal()+
+  theme(#panel.grid.major.y = element_blank(),
+    #panel.grid.minor.x = element_blank(),
+    axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
+    axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
+    axis.title=element_text(size=10),
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+
+
+
+###############################################################################
+######################## Comparison between models Time #######################
+###############################################################################
+
+
+
+df_rfc_time_col <- df_RFC[, c("Model_training_time", "Run","Method")]
+
+
+df_dtc_time_col <- df_DTC[, c("Model_training_time", "Run","Method")]
+
+#non-parallel
+
+np_rfc_t <-  filter(df_rfc_time_col,Method == "non-parallel_method")
+np_dtc_t <- filter(df_dtc_time_col,Method == "non-parallel_method")
+colors <- c("RFC" = "blue", "DTC" = "red")
+
+
+plot_time_models_np <- ggplot(np_rfc_t, aes(x=Run, y= Model_training_time))+
+  geom_line(alpha = 0.5)+
+  geom_point(aes(color="RFC"),size = 5)+
+  geom_line(data = np_dtc_t, alpha = 0.5)+
+  geom_point(data = np_dtc_t, aes(color="DTC"),size = 5)+
+  labs(title="Comparisson of training time between models trained sequentially",
+       x="Trial Nr.",  
+       y="Time in seconds",
+       color = "Model")+
+  scale_color_manual(values = colors)+
+  theme_minimal()+
+  theme(#panel.grid.major.y = element_blank(),
+    #panel.grid.minor.x = element_blank(),
+    axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
+    axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
+    axis.title=element_text(size=10),
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+
+#parallel
+p_rfc_t <-  filter(df_rfc_time_col,Method == "parallel_method")
+p_dtc_t <- filter(df_dtc_time_col,Method == "parallel_method")
+
+
+plot_time_models_p <- ggplot(p_rfc_t, aes(x=Run, y= Model_training_time))+
+  geom_line(alpha = 0.5)+
+  geom_point(aes(color="RFC"),size = 5)+
+  geom_line(data = p_dtc_t, alpha = 0.5)+
+  geom_point(data = p_dtc_t, aes(color="DTC"),size = 5)+
+  labs(title="Comparisson of training time between models trained by parallel processing",
+       x="Trial Nr.",  
+       y="Time in seconds",
+       color = "Model")+
+  scale_color_manual(values = colors)+
+  theme_minimal()+
+  theme(#panel.grid.major.y = element_blank(),
+    #panel.grid.minor.x = element_blank(),
+    axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
+    axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
+    axis.title=element_text(size=10),
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+    
+
+
+
 ###############################################################################
 ################################## Save Plots #################################
 ###############################################################################
 
 
 ggsave("total_training_time.png", plot=plot_time, path="./result_plots", bg="white")
+ggsave("avrg_acc_models_np.png", plot=plot_avrg_acc_models_np, path="./result_plots", bg="white")
+ggsave("avrg_acc_models_parallel.png", plot=plot_avrg_acc_models_p, path="./result_plots", bg="white")
+ggsave("time_models_np.png", plot=plot_time_models_np, path="./result_plots", bg="white")
+ggsave("time_models_parallel.png", plot=plot_time_models_p, path="./result_plots", bg="white")
 
 ggsave("total_training_time_DTC.png", plot=plot_time_DTC, path="./result_plots", bg="white")
 ggsave("accuracy_DTC_hyperparameter_1.png", plot=plot_DTC_acc_1, path="./result_plots", bg="white")

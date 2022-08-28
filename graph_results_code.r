@@ -53,49 +53,61 @@ plot_time_DTC <- ggplot(df_DTC,aes(x=Run, y=Model_training_time, group=Method, c
 
 plot_DTC_acc_1 <- ggplot(df_DTC,aes(x=Run, y=Accuracy_Model_1, group=Method))+
   geom_line(aes(color=Method),size=1.2)+
-  labs(title="Accuracy measured per trial for DTC model \nwith hyperparameter combination [criterion = gini, splitter = best]",x="Trial Nr.", y="Accuracy")+
+  labs(title="Accuracy measured per trial for DTC model 1",
+       subtitle = "Hyperparameter combination [criterion = gini, splitter = best]",
+       x="Trial Nr.", y="Accuracy")+
   theme_minimal()+
   theme(#panel.grid.major.y = element_blank(),
     #panel.grid.minor.x = element_blank(),
     axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
     axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
     axis.title=element_text(size=10),
-    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), face="bold", size=15, hjust = 0.5),
+    plot.subtitle = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), color="dimgray", face="bold",size=12, hjust = 0.5))
 
 
 plot_DTC_acc_2 <- ggplot(df_DTC,aes(x=Run, y=Accuracy_Model_2, group=Method))+
   geom_line(aes(color=Method),size=1.2)+
-  labs(title="Accuracy measured per trial for DTC model \nwith hyperparameter combination [criterion = gini, splitter = random]",x="Trial Nr.",  y="Accuracy")+
+  labs(title="Accuracy measured per trial for DTC model 2",
+  subtitle="Hyperparameter combination [criterion = gini, splitter = random]",
+  x="Trial Nr.",  y="Accuracy")+
   theme_minimal()+
   theme(#panel.grid.major.y = element_blank(),
     #panel.grid.minor.x = element_blank(),
     axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
     axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
     axis.title=element_text(size=10),
-    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), face="bold", size=15, hjust = 0.5),
+    plot.subtitle = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), color="dimgray", face="bold",size=12, hjust = 0.5))
 
 plot_DTC_acc_3 <- ggplot(df_DTC,aes(x=Run, y=Accuracy_Model_3, group=Method))+
   geom_line(aes(color=Method),size=1.2)+
-  labs(title="Accuracy measured per trial for DTC model \nwith hyperparameter combination [criterion = entropy, splitter = best]",x="Trial Nr.",  y="Accuracy")+
+  labs(title="Accuracy measured per trial for DTC model 3",
+  subtitle="Hyperparameter combination [criterion = entropy, splitter = best]",
+  x="Trial Nr.",  y="Accuracy")+
   theme_minimal()+
   theme(#panel.grid.major.y = element_blank(),
     #panel.grid.minor.x = element_blank(),
     axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
     axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
     axis.title=element_text(size=10),
-    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), face="bold", size=15, hjust = 0.5),
+    plot.subtitle = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), color="dimgray", face="bold",size=12, hjust = 0.5))
 
 
 plot_DTC_acc_4 <- ggplot(df_DTC,aes(x=Run, y=Accuracy_Model_4, group=Method))+
   geom_line(aes(color=Method),size=1.2)+
-  labs(title="Accuracy measured per trail for DTC model \nwith hyperparameter combination [criterion = entropy, splitter = random]",x="Trial Nr.",  y="Accuracy")+
+  labs(title="Accuracy measured per trail for DTC model 4",
+  subtitle="Hyperparameter combination [criterion = entropy, splitter = random]",
+  x="Trial Nr.",  y="Accuracy")+
   theme_minimal()+
   theme(#panel.grid.major.y = element_blank(),
     #panel.grid.minor.x = element_blank(),
     axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
     axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
     axis.title=element_text(size=10),
-    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), face="bold", size=15, hjust = 0.5),
+    plot.subtitle = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), color="dimgray", face="bold",size=12, hjust = 0.5))
 
 
 
@@ -150,72 +162,90 @@ plot_time_RFC <- ggplot(df_RFC,aes(x=Run, y=Model_training_time, group=Method, c
 
 plot_RFC_acc_1 <- ggplot(df_RFC,aes(x=Run, y=Accuracy_Model_1, group=Method))+
   geom_line(aes(color=Method),size=1.2)+
-  labs(title="Accuracy measured per trial for RFC model \nwith hyperparameter combination [n_estimator = 5, criterion = gini]",x="Trial Nr.", y="Accuracy")+
+  labs(title="Accuracy measured per trial for RFC model 1",
+  subtitle="Hyperparameter combination [n_estimator = 5, criterion = gini]",
+  x="Trial Nr.", y="Accuracy")+
   theme_minimal()+
   theme(#panel.grid.major.y = element_blank(),
     #panel.grid.minor.x = element_blank(),
     axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
     axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
     axis.title=element_text(size=10),
-    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), face="bold", size=15, hjust = 0.5),
+    plot.subtitle = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), color="dimgray", face="bold",size=12, hjust = 0.5))
 
 
 plot_RFC_acc_2 <- ggplot(df_RFC,aes(x=Run, y=Accuracy_Model_2, group=Method))+
   geom_line(aes(color=Method),size=1.2)+
-  labs(title="Accuracy measured per trial for RFC model \nwith hyperparameter combination [n_estimator = 5, criterion = entropy]",x="Trial Nr.",  y="Accuracy")+
+  labs(title="Accuracy measured per trial for RFC model 2",
+  subtitle="Hyperparameter combination [n_estimator = 5, criterion = entropy]",
+  x="Trial Nr.",  y="Accuracy")+
   theme_minimal()+
   theme(#panel.grid.major.y = element_blank(),
     #panel.grid.minor.x = element_blank(),
     axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
     axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
     axis.title=element_text(size=10),
-    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), face="bold", size=15, hjust = 0.5),
+    plot.subtitle = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), color="dimgray", face="bold",size=12, hjust = 0.5))
 
 plot_RFC_acc_3 <- ggplot(df_RFC,aes(x=Run, y=Accuracy_Model_3, group=Method))+
   geom_line(aes(color=Method),size=1.2)+
-  labs(title="Accuracy measured per trial for RFC model \nwith hyperparameter combination [n_estimator = 10, criterion = gini]",x="Trial Nr.",  y="Accuracy")+
+  labs(title="Accuracy measured per trial for RFC model 3",
+  subtitle="Hyperparameter combination [n_estimator = 10, criterion = gini]",
+  x="Trial Nr.",  y="Accuracy")+
   theme_minimal()+
   theme(#panel.grid.major.y = element_blank(),
     #panel.grid.minor.x = element_blank(),
     axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
     axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
     axis.title=element_text(size=10),
-    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), face="bold", size=15, hjust = 0.5),
+    plot.subtitle = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), color="dimgray", face="bold",size=12, hjust = 0.5))
 
 
 plot_RFC_acc_4 <- ggplot(df_RFC,aes(x=Run, y=Accuracy_Model_4, group=Method))+
   geom_line(aes(color=Method),size=1.2)+
-  labs(title="Accuracy measured per trail for RFC model \nwith hyperparameter combination [n_estimator = 10, criterion = entropy]",x="Trial Nr.",  y="Accuracy")+
+  labs(title="Accuracy measured per trail for RFC model 4",
+  subtitle="Hyperparameter combination [n_estimator = 10, criterion = entropy]",
+  x="Trial Nr.",  y="Accuracy")+
   theme_minimal()+
   theme(#panel.grid.major.y = element_blank(),
     #panel.grid.minor.x = element_blank(),
     axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
     axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
     axis.title=element_text(size=10),
-    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), face="bold", size=15, hjust = 0.5),
+    plot.subtitle = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), color="dimgray", face="bold",size=12, hjust = 0.5))
 
 
 plot_RFC_acc_5 <- ggplot(df_RFC,aes(x=Run, y=Accuracy_Model_5, group=Method))+
   geom_line(aes(color=Method),size=1.2)+
-  labs(title="Accuracy measured per trail for RFC model \nwith hyperparameter combination [n_estimator = 15, criterion = gini]",x="Trial Nr.",  y="Accuracy")+
+  labs(title="Accuracy measured per trail for RFC model 5",
+  subtitle="Hyperparameter combination [n_estimator = 15, criterion = gini]",
+  x="Trial Nr.",  y="Accuracy")+
   theme_minimal()+
   theme(#panel.grid.major.y = element_blank(),
     #panel.grid.minor.x = element_blank(),
     axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
     axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
     axis.title=element_text(size=10),
-    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), face="bold", size=15, hjust = 0.5),
+    plot.subtitle = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), color="dimgray", face="bold",size=12, hjust = 0.5))
 
 plot_RFC_acc_6 <- ggplot(df_RFC,aes(x=Run, y=Accuracy_Model_6, group=Method))+
   geom_line(aes(color=Method),size=1.2)+
-  labs(title="Accuracy measured per trail for RFC model \nwith hyperparameter combination [n_estimator = 15, criterion = entropy]",x="Trial Nr.",  y="Accuracy")+
+  labs(title="Accuracy measured per trail for RFC model 6",
+  subtitle="Hyperparameter combination [n_estimator = 15, criterion = entropy]",
+  x="Trial Nr.",  y="Accuracy")+
   theme_minimal()+
   theme(#panel.grid.major.y = element_blank(),
     #panel.grid.minor.x = element_blank(),
     axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)),
     axis.title.y = element_text(margin = margin(t=0, r=20, b=0, l=0)),
     axis.title=element_text(size=10),
-    plot.title = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), face="bold", size=15, hjust = 0.5))
+    plot.title = element_text(margin = margin(t = 0, r = 0, b = 5, l = 0), face="bold", size=15, hjust = 0.5),
+    plot.subtitle = element_text(margin = margin(t = 0, r = 0, b = 20, l = 0), color="dimgray", face="bold",size=12, hjust = 0.5))
 
 
 #Average accuracy per combination of hyperparameter

@@ -19,18 +19,14 @@ if __name__ == "__main__" :
 
     start_time_0 = time.time() 
     RFC_np_acc, DTC_np_acc, RFC_np_training_time, DTC_np_trining_time = mlT.train_model()
+    mlT.predict()
     finalexectime_0 = time.time() - start_time_0 
     
-    mlT.predict()
-    
-    
-    
+ 
     start_time_1 = time.time() 
     RFC_p_acc, DTC_p_acc, RFC_p_training_time, DTC_p_trining_time = mlT_parallel.train_model()
-    finalexectime_1 = time.time() - start_time_1
-    
     mlT_parallel.prediction()
-    
+    finalexectime_1 = time.time() - start_time_1
     
     print()
     print("Time taken for training model without parallel processes: \n", finalexectime_0)
